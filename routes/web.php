@@ -1,7 +1,13 @@
 <?php
+/**
+ * @var \Illuminate\Routing\Router $router
+ */
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\RouteFileRegistrar;
+use App\Modules\Home\Http\Controllers\HomeController;
+
+$registrar = new RouteFileRegistrar($router);
+$registrar->register(base_path('routes/web/auth/auth.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +20,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('web.sections.home');
+$router->get('/', [HomeController::class, 'index'])->name('web.sections.home');
