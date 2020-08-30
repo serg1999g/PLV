@@ -2,6 +2,8 @@
 
 namespace App\Core\Providers;
 
+use App\Modules\Post\Models\Post;
+use App\Modules\Post\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
 //         'App\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
     ];
 
     /**
@@ -30,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->hasRole('admin')) {
                 return true;
             }
+            return null;
         });
     }
 }

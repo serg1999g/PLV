@@ -20,24 +20,20 @@ class UserSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         //create permissions
-        Permission::create(['name' => 'edit posts']);
+        Permission::create(['name' => 'edit own posts']);
         Permission::create(['name' => 'create posts']);
-        Permission::create(['name' => 'delete posts']);
+        Permission::create(['name' => 'delete own posts']);
+
+        Permission::create(['name'=>'edit all posts']);
+        Permission::create(['name'=>'delete any post']);
 
         //create roles and assign existing permissions
+
+        // writer role
         $role1 = Role::create(['name' => 'writer']);
-        $role1->givePermissionTo('edit posts');
+        $role1->givePermissionTo('edit own posts');
         $role1->givePermissionTo('create posts');
-        $role1->givePermissionTo('delete posts');
-
-        $role2 = Role::create(['name' => 'admin']);
-
-        // create admin user
-        $adminData = ['name' => 'admin', 'email' => 'admin@admin.com', 'password' => Hash::make('admin123')];
-
-        $admin = User::create($adminData);
-        $admin->assignRole($role2);
-
+        $role1->givePermissionTo('delete own posts');
 
         // create writer users
         $users = [
@@ -56,5 +52,26 @@ class UserSeeder extends Seeder
             ]);
             $newUser->assignRole($role1);
         }
+
+        // redactor role
+        $role2 = Role::create(['name'=>'redactor']);
+        $role2->givePermissionTo(['edit own posts']);
+        $role2->givePermissionTo(['create posts']);
+        $role2->givePermissionTo(['delete own posts']);
+        $role2->givePermissionTo(['edit all posts']);
+        $role2->givePermissionTo(['delete any post']);
+
+        // create redactor user
+        $redactorData = ['name' => 'redactor', 'email' => 'redactor@gmail.com', 'password' => Hash::make('redactor123')];
+        $redactor = User::create($redactorData);
+        $redactor->assignRole($role2);
+
+        // admin role
+        $role3 = Role::create(['name' => 'admin']);
+
+        // create admin user
+        $adminData = ['name' => 'admin', 'email' => 'admin@admin.com', 'password' => Hash::make('admin123')];
+        $admin = User::create($adminData);
+        $admin->assignRole($role3);
     }
 }
