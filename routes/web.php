@@ -3,6 +3,7 @@
  * @var \Illuminate\Routing\Router $router
  */
 
+use App\Modules\Post\Http\Controllers\PostController;
 use Illuminate\Routing\RouteFileRegistrar;
 use App\Modules\Home\Http\Controllers\HomeController;
 
@@ -21,3 +22,5 @@ $registrar->register(base_path('routes/web/auth/auth.php'));
 */
 
 $router->get('/', [HomeController::class, 'index'])->name('web.sections.home');
+
+$router->get('/posts', [PostController::class, 'index'])->name('web.posts.index');
