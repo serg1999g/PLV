@@ -55,9 +55,7 @@ class UserSeeder extends Seeder
 
         // redactor role
         $role2 = Role::create(['name'=>'redactor']);
-        $role2->givePermissionTo(['edit own posts']);
         $role2->givePermissionTo(['create posts']);
-        $role2->givePermissionTo(['delete own posts']);
         $role2->givePermissionTo(['edit all posts']);
         $role2->givePermissionTo(['delete any post']);
 
