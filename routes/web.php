@@ -23,4 +23,11 @@ $registrar->register(base_path('routes/web/auth/auth.php'));
 
 $router->get('/', [HomeController::class, 'index'])->name('web.sections.home');
 
-$router->get('/posts', [PostController::class, 'index'])->name('web.posts.index');
+$router->middleware(['auth'])->group(function () use ($router) {
+    $router->get('posts', [PostController::class, 'index'])->name('web.posts.index');
+    $router->get('posts/create', [PostController::class, 'create'])->name('web.posts.create');
+    $router->post('posts', [PostController::class, 'store'])->name('web.posts.store');
+    $router->get('posts/{id}/edit', [PostController::class, 'edit'])->name('web.posts.edit');
+    $router->post('posts/{id}', [PostController::class, 'update'])->name('web.posts.update');
+    $router->get('posts/{id}', [PostController::class, 'show'])->name('web.posts.show');
+});
