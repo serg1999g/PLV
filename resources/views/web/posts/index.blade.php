@@ -8,10 +8,10 @@
 
 @section('content')
     <div class="container">
-        <div>
-            <h3>posts</h3>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="mb-0">posts</h3>
             @can('create posts')
-                <div class="d-flex justify-content-end mb-4">
+                <div class="d-flex justify-content-end">
                     <a class="btn btn-primary" href="{{route('web.posts.create')}}">create</a>
                 </div>
             @endcan
@@ -37,6 +37,7 @@
                 </div>
 
             @endforeach
+                {{ $posts->links() }}
         </div>
     </div>
 @endsection

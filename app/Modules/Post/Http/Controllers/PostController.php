@@ -15,7 +15,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::latest()->paginate(10);
+
         return view('web.posts.index', ['posts' => $posts]);
     }
 
@@ -47,7 +48,7 @@ class PostController extends Controller
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $post = Post::find($id);
         $this->authorize('update', $post);
@@ -63,7 +64,7 @@ class PostController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(PostRequest $request, $id)
+    public function update(PostRequest $request, int $id)
     {
         $post = Post::find($id);
         $this->authorize('update', $post);
@@ -78,7 +79,7 @@ class PostController extends Controller
      * @param $id
      * @return Application|Factory|View
      */
-    public function show($id)
+    public function show(int $id)
     {
         $post = Post::find($id);
 
