@@ -1,9 +1,15 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
-@import "partials/export";
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Variables
+@import 'variables';
+@import "functions";
+@import "mixins";
+@import "default";
+@import "typhography";
+@import "utils";
+@import "partials/export";
+@import "main";

@@ -11,7 +11,7 @@
     <main class="py-4">
         @yield('content')
     </main>
-    <footer>
+    <footer class="footer py-3 bg-white shadow">
         @include('web.layouts.footer')
     </footer>
 </div>
