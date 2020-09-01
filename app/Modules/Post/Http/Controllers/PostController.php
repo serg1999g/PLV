@@ -13,6 +13,10 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
+    /**
+     * Show all posts
+     *
+     */
     public function index()
     {
         $posts = Post::latest()->paginate(10);
@@ -21,7 +25,7 @@ class PostController extends Controller
     }
 
     /**
-     * create post
+     * Create post
      *
      * @throws AuthorizationException
      */
@@ -32,6 +36,12 @@ class PostController extends Controller
         return view('web.posts.create');
     }
 
+    /**
+     * Store post
+     *
+     * @param PostRequest $request
+     * @return RedirectResponse
+     */
     public function store(PostRequest $request)
     {
         $user = $request->user();
@@ -42,7 +52,7 @@ class PostController extends Controller
     }
 
     /**
-     * update post
+     * Edit post if you are its creator
      *
      * @param $id
      * @return Application|Factory|View
@@ -57,7 +67,7 @@ class PostController extends Controller
     }
 
     /**
-     * update post
+     * Update post if you are its creator
      *
      * @param PostRequest $request
      * @param $id
@@ -75,7 +85,8 @@ class PostController extends Controller
     }
 
     /**
-     * update post
+     * Show post
+     *
      * @param $id
      * @return Application|Factory|View
      */
@@ -86,9 +97,18 @@ class PostController extends Controller
         return view('web.posts.show', ['post' => $post]);
     }
 
+    /**
+     * Delete post if you are its creator
+     *
+     * @param $id
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
     public function destroy(int $id)
     {
-        Post::find($id)->delete();
+        $post = Post::find($id);
+        $this->authorize('delete', $post);
+        $post->delete();
 
         return redirect()->route('web.posts.index');
     }
