@@ -33,11 +33,20 @@
                                 <a class="btn btn-primary" href="{{route('web.posts.edit', $post->id)}}">edit</a>
                             </div>
                         @endcan
+                        @can('delete', $post)
+                            <form method="POST" action="{{route('web.posts.destroy',$post->id)}}">
+                                @method('DELETE')
+                                @csrf
+                                <button onclick="return confirm('Are you sure?');" class="btn btn-danger ml-2">
+                                    delete
+                                </button>
+                            </form>
+                        @endcan
                     </div>
                 </div>
 
             @endforeach
-                {{ $posts->links() }}
+            {{ $posts->links() }}
         </div>
     </div>
 @endsection
