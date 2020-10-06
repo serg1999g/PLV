@@ -6,6 +6,7 @@
 use App\Modules\Post\Http\Controllers\PostController;
 use Illuminate\Routing\RouteFileRegistrar;
 use App\Modules\Home\Http\Controllers\HomeController;
+use Illuminate\Routing\Router;
 
 $registrar = new RouteFileRegistrar($router);
 $registrar->register(base_path('routes/web/auth/auth.php'));
@@ -23,12 +24,12 @@ $registrar->register(base_path('routes/web/auth/auth.php'));
 
 $router->get('/', [HomeController::class, 'index'])->name('web.sections.home');
 
-$router->middleware(['auth'])->group(function () use ($router) {
-    $router->get('posts', [PostController::class, 'index'])->name('web.posts.index');
-    $router->get('posts/create', [PostController::class, 'create'])->name('web.posts.create');
-    $router->post('posts', [PostController::class, 'store'])->name('web.posts.store');
-    $router->get('posts/{id}/edit', [PostController::class, 'edit'])->name('web.posts.edit');
-    $router->post('posts/{id}', [PostController::class, 'update'])->name('web.posts.update');
-    $router->get('posts/{id}', [PostController::class, 'show'])->name('web.posts.show');
-    $router->delete('posts/{id}/destroy', [PostController::class, 'destroy'])->name('web.posts.destroy');
+$router->as('web.posts.')->prefix('posts')->middleware(['auth'])->group(function (Router $router) {
+    $router->get('/', [PostController::class, 'index'])->name('index');
+    $router->get('create', [PostController::class, 'create'])->name('create');
+    $router->post('/', [PostController::class, 'store'])->name('store');
+    $router->get('{id}/edit', [PostController::class, 'edit'])->name('edit');
+    $router->post('{id}', [PostController::class, 'update'])->name('update');
+    $router->get('{id}', [PostController::class, 'show'])->name('show');
+    $router->delete('{id}/destroy', [PostController::class, 'destroy'])->name('destroy');
 });

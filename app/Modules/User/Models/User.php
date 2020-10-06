@@ -4,6 +4,7 @@ namespace App\Modules\User\Models;
 
 use App\Modules\Post\Models\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -46,7 +47,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts()
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function query()
+    {
+        return parent::query();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function posts() : HasMany
     {
         return $this->hasMany(Post::class);
     }
