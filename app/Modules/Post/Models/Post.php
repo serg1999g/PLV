@@ -4,6 +4,16 @@ namespace App\Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Properties:
+ * @property int                                                    $id
+ * @property string                                                 $title
+ * @property string                                                 $description
+ * @property string                                                 $content
+ * @property \Carbon\Carbon                                         $created_at
+ * @property \Carbon\Carbon                                         $updated_at
+ */
+
 class Post extends Model
 {
     /**
@@ -21,4 +31,12 @@ class Post extends Model
     protected $fillable = [
         'title', 'description', 'content'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function query()
+    {
+        return parent::query();
+    }
 }
